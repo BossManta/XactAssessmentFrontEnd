@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+
+.formInput {
+  @apply my-1 p-2 border-b-2 rounded-md;
+}
+
+.formError {
+  @apply bg-red-200;
+}
+
+@tailwind utilities;
