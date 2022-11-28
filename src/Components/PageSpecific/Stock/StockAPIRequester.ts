@@ -1,6 +1,6 @@
 import { StockInfo } from "./StockTypes";
 
-var endpoint = "http://localhost:5141/api/stockmaster";
+var endpoint = "http://102.65.134.90:5141/api/stockmaster";
 
 
 export const fetchStock = async (searchString: string, setLoading: (b: boolean)=>void, setStockList: (d: [])=>void) => {

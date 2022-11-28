@@ -38,7 +38,7 @@ const StockTable: FunctionComponent<StockTableProps> = ({refreshTrigger, customR
         "SalesTotal",
         "# Purchased",
         "# Sold",
-        "stock",
+        "Stock",
     ]
 
     const tableDataNames: (keyof StockInfo)[] = [

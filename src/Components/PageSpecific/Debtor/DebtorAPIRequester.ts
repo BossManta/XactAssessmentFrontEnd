@@ -1,4 +1,4 @@
-var endpoint = "http://localhost:5141/api/debtorsmaster";
+var endpoint = "http://102.65.134.90:5141/api/debtorsmaster";
 
 
 export const fetchDebtors = async (searchString: string, setLoading: (b: boolean)=>void, setDebtorsList: (d: [])=>void) => {
