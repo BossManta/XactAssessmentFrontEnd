@@ -70,8 +70,19 @@ const Invoice: FunctionComponent<InvoiceProps> = () => {
                 {
                     currentSelectionScreen === "Stock" && 
                     <>
-                        <h1>Selected debtor #{selectedDebtor?.accountCode}</h1>
-                        <h1>Select Stock</h1>
+                        <div className="flex justify-between w-full mb-12 border-b-2 pb-2">
+                            <DefaultButton onClick={()=>setCurrentSelectionScreen("Debtor")}>
+                                Change Debtor
+                            </DefaultButton>
+
+                            <h1 className="my-auto">Selected Debtor <b>#{selectedDebtor?.accountCode}</b></h1>
+
+                            <DefaultButton onClick={()=>{}}>
+                                Submit Invoice
+                            </DefaultButton>
+                        </div>
+
+                        <h1 className="text-3xl font-bold">Select Stock</h1>
                         <div className="w-full h-96 overflow-auto">                
                             <StockTable refreshTrigger={true} 
                                 customRowElementBuilder = {[

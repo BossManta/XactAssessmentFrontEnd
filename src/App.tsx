@@ -10,7 +10,7 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<h1>Hello</h1>}/>
+          <Route path="/" element={<h1 className='text-4xl py-20 w-full text-center'>Timothy Bosman ERP</h1>}/>
           <Route path="/debtorsmaster" element={<DebtorsMaster/>}/>
           <Route path="/stockmaster" element={<StockMaster/>}/>
           <Route path="/invoice" element={<Invoice/>}/>
