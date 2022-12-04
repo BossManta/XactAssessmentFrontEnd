@@ -25,6 +25,7 @@ const DebtorForm: FunctionComponent<DebtorFormProps> = ({formSubmit, presetData}
     
     var formFieldInfo: FormFieldInfo[] = [
         {type: "number", placeholder: "Account Code", apiName: "accountCode", requirements: {required: true}},
+        {type: "text", placeholder: "Name", apiName: "name", requirements: {required: true, maxLength: 30}},
         {type: "text", placeholder: "Address1", apiName: "address1", requirements: {required: true, maxLength: 30}},
         {type: "text", placeholder: "Address2", apiName: "address2", requirements: {required: true, maxLength: 30}},
         {type: "text", placeholder: "Address3", apiName: "address3", requirements: {required: true, maxLength: 30}},
@@ -42,7 +43,7 @@ const DebtorForm: FunctionComponent<DebtorFormProps> = ({formSubmit, presetData}
 
             {formFieldInfo.map(f=> {
                 const defaultValue = presetData?presetData[f.apiName as keyof DebtorInfo]:"";
-                return <input defaultValue={defaultValue} className={`formInput ${errors[f.apiName] && 'formError'}`} type={f.type} placeholder={f.placeholder} {...register(f.apiName, f.requirements)} />
+                return <input title={f.placeholder} defaultValue={defaultValue} className={`formInput ${errors[f.apiName] && 'formError'}`} type={f.type} placeholder={f.placeholder} {...register(f.apiName, f.requirements)} />
             })}
 
             <input className="bg-green-500 p-2 mt-6 rounded-md text-white" type="submit" value="Submit"/>

@@ -1,6 +1,7 @@
 import { FormEvent, FunctionComponent, useEffect, useState } from "react";
+import formatMoney from "../../Shared/MoneyFormatter";
 import { CustomRowElementBuilder } from "../../Shared/TableDisplayerTypes";
-import TableDisplayer from "../../TableDisplayer";
+import TableDisplayer, { ColumnInfo } from "../../TableDisplayer";
 import { fetchStock } from "./StockAPIRequester";
 import { StockInfo } from "./StockTypes";
 
@@ -29,28 +30,16 @@ const StockTable: FunctionComponent<StockTableProps> = ({refreshTrigger, customR
         fetchStock(search, setLoading, setStockList);
     }
 
-    const tableHeaderNames = [
-        "Stock Code",
-        "Disc",
-        "Cost",
-        "Sell Price",
-        "PurchaseTotal",
-        "SalesTotal",
-        "# Purchased",
-        "# Sold",
-        "Stock",
-    ]
-
-    const tableDataNames: (keyof StockInfo)[] = [
-        "stockCode",
-        "stockDescription",
-        "cost",
-        "sellingPrice",
-        "totalPurchasesExclVat",
-        "totalSalesExclVat",
-        "qtyPurchased",
-        "qtySold",
-        "stockOnHand",
+    const tableColumnInfo: ColumnInfo = [
+        {headerName:"Stock Code",       jsonName:"stockCode"},
+        {headerName:"Disc",             jsonName:"stockDescription"},
+        {headerName:"Cost",             jsonName:"cost", customFunction:formatMoney},
+        {headerName:"Sell Price",       jsonName:"sellingPrice", customFunction:formatMoney},
+        {headerName:"PurchaseTotal",    jsonName:"totalPurchasesExclVat", customFunction:formatMoney},
+        {headerName:"SalesTotal",       jsonName:"totalSalesExclVat", customFunction:formatMoney},
+        {headerName:"# Purchased",      jsonName:"qtyPurchased"},
+        {headerName:"# Sold",           jsonName:"qtySold"},
+        {headerName:"Stock",            jsonName:"stockOnHand"},
     ]
 
     return ( 
@@ -62,8 +51,7 @@ const StockTable: FunctionComponent<StockTableProps> = ({refreshTrigger, customR
 
             {
                 loading?<h1 className="text-2xl">Loading...</h1>:            
-                <TableDisplayer headerNames={tableHeaderNames}
-                                dataNames={tableDataNames as []}
+                <TableDisplayer columnInfo={tableColumnInfo}
                                 jsonData={stockList as []}
                                 customRowElementBuilder = {customRowElementBuilder} />
             }

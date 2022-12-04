@@ -9,3 +9,12 @@ export type StockInfo = {
     qtySold: number
     stockOnHand: number
 }
+
+export type StockDetails = {
+    invoiceNo: number
+    date: string
+    debtorAccountCode: number
+    debtorName: string
+    purchaseQty: number
+    total: number
+}

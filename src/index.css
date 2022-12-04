@@ -9,4 +9,12 @@
   @apply bg-red-200;
 }
 
+.defaultButtonStyle {
+  @apply bg-amber-300 hover:bg-amber-400 rounded-md py-2 px-4 mx-1;
+}
+
+.overflow {
+  @apply w-full h-96 overflow-auto;
+}
+
 @tailwind utilities;

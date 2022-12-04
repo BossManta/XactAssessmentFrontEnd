@@ -1,16 +1,19 @@
 import {FunctionComponent, useState} from 'react';
 import { CustomRowElementBuilder } from './Shared/TableDisplayerTypes';
 
+export type ColumnInfo = {headerName:string, jsonName: string, customFunction?: (input: any)=>any}[]
+
+
 interface TableDisplayerProps {
-    headerNames: string[],
-    dataNames: string[],
+    columnInfo: ColumnInfo
     jsonData: [],
     customRowElementBuilder?: CustomRowElementBuilder[]
+    disableSort?: boolean
 }
  
-const TableDisplayer: FunctionComponent<TableDisplayerProps> = ({headerNames, dataNames, jsonData, customRowElementBuilder=[]}) => {
+const TableDisplayer: FunctionComponent<TableDisplayerProps> = ({columnInfo, jsonData, customRowElementBuilder=[], disableSort=false}) => {
     
-    const [sortingHeader, setSortingHeader] = useState<string>(dataNames[0]);
+    const [sortingHeader, setSortingHeader] = useState<string>(columnInfo[0].headerName);
     const [isDescendingSort, setIsDescendingSort] = useState<boolean>(true);
 
     const handleHeaderClick = (headerJsonName: string) => {
@@ -40,10 +43,12 @@ const TableDisplayer: FunctionComponent<TableDisplayerProps> = ({headerNames, da
     
     return ( 
         <table className='w-full'>
-            <thead className=' border-b'>
+            <thead className='border-b'>
                 <tr className='border-b border-gray-300'>
-                    {headerNames.map((header, i) => 
-                        <th className='select-none' onClick={() => handleHeaderClick(dataNames[i])} key={header}>{`${header} ${sortingHeader===dataNames[i]?isDescendingSort?"🙂":"🙃":""}`}</th>
+                    {columnInfo.map((column, i) => 
+                        <th className='select-none' onClick={() => !disableSort && handleHeaderClick(column.jsonName)} key={column.headerName}>
+                            {`${column.headerName} ${!disableSort && sortingHeader===column.jsonName?isDescendingSort?"🙂":"🙃":""}`}
+                        </th>
                     )}
                 </tr>
             </thead>
@@ -51,9 +56,11 @@ const TableDisplayer: FunctionComponent<TableDisplayerProps> = ({headerNames, da
             <tbody>
                 {jsonData.map((entry,i) => 
                     <tr key={i}  className='border-b border-gray-300 h-12'>
-                        {dataNames.map(field =>
-                            <td key={field}>
-                                <h1 className='text-center'>{entry[field]}</h1>
+                        {columnInfo.map(column =>
+                            <td key={column.jsonName}>
+                                <h1 className='text-center'>
+                                    {column.customFunction?column.customFunction(entry[column.jsonName]):entry[column.jsonName]}
+                                </h1>
                             </td>
                         )}
                         <td>

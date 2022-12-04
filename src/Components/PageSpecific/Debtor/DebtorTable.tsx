@@ -1,6 +1,7 @@
 import { FormEvent, FunctionComponent, useEffect, useState } from "react";
+import formatMoney from "../../Shared/MoneyFormatter";
 import { CustomRowElementBuilder } from "../../Shared/TableDisplayerTypes";
-import TableDisplayer from "../../TableDisplayer";
+import TableDisplayer, { ColumnInfo } from "../../TableDisplayer";
 import { fetchDebtors } from "./DebtorAPIRequester";
 import { DebtorInfo } from "./DebtorTypes";
 
@@ -29,25 +30,15 @@ const DebtorTable: FunctionComponent<DebtorTableProps> = ({refreshTrigger, custo
         fetchDebtors(search, setLoading, setDebtorsList);
     }
     
-    
-    const tableHeaderNames = [
-        "Acc Code",
-        "Address1",
-        "Address2",
-        "Address3",
-        "Balance",
-        "Cost YTD",
-        "Sales YTD",
-    ]
-
-    const tableDataNames: (keyof DebtorInfo)[] = [
-        "accountCode",
-        "address1",
-        "address2",
-        "address3",
-        "balance",
-        "costYearToDate",
-        "salesYearToDate",
+    const tableColumnInfo: ColumnInfo = [
+        {headerName:"Acc Code",     jsonName:"accountCode"},
+        {headerName:"Name",         jsonName:"name"},
+        {headerName:"Address1",     jsonName:"address1"},
+        {headerName:"Address2",     jsonName:"address2"},
+        {headerName:"Address3",     jsonName:"address3"},
+        {headerName:"Balance",      jsonName:"balance", customFunction:formatMoney},
+        {headerName:"Cost YTD",     jsonName:"costYearToDate"},
+        {headerName:"Sales YTD",     jsonName:"salesYearToDate"},
     ]
 
 
@@ -60,8 +51,7 @@ const DebtorTable: FunctionComponent<DebtorTableProps> = ({refreshTrigger, custo
 
             {
                 loading?<h1 className="text-2xl">Loading...</h1>:            
-                <TableDisplayer headerNames={tableHeaderNames}
-                                dataNames={tableDataNames as []}
+                <TableDisplayer columnInfo={tableColumnInfo}
                                 jsonData={debtorsList as []} 
                                 customRowElementBuilder={customRowElementBuilder}/>
             }

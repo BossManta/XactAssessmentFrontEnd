@@ -3,6 +3,8 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import DebtorsMaster from './Components/PageSpecific/Debtor/DebtorsMaster';
 import StockMaster from './Components/PageSpecific/Stock/StockMaster';
 import Invoice from './Components/PageSpecific/Invoice/Invoice';
+import DebtorsDetailsPage from './Components/PageSpecific/Debtor/DebtorsDetailsPage';
+import StockDetailsPage from './Components/PageSpecific/Stock/StockDetailsPage';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Route path="/debtorsmaster" element={<DebtorsMaster/>}/>
           <Route path="/stockmaster" element={<StockMaster/>}/>
           <Route path="/invoice" element={<Invoice/>}/>
+          <Route path="/stockdetails/:id" element={<StockDetailsPage/>}/>
+          <Route path="/debtorsdetails/:id" element={<DebtorsDetailsPage/>}/>
         </Routes>
       </Router>
     </div>

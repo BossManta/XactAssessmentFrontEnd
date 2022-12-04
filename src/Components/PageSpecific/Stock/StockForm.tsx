@@ -45,7 +45,7 @@ const StockForm: FunctionComponent<StockFormProps> = ({formSubmit, presetData}) 
 
             {formFieldInfo.map(f=> {
                 const defaultValue = presetData?presetData[f.apiName as keyof StockInfo]:"";
-                return <input defaultValue={defaultValue} className={`formInput ${errors[f.apiName] && 'formError'}`} type={f.type} placeholder={f.placeholder} {...register(f.apiName, f.requirements)} />
+                return <input title={f.placeholder} defaultValue={defaultValue} className={`formInput ${errors[f.apiName] && 'formError'}`} type={f.type} placeholder={f.placeholder} {...register(f.apiName, f.requirements)} />
             })}
 
             <input className="bg-green-500 p-2 mt-6 rounded-md text-white" type="submit" value="Submit"/>
