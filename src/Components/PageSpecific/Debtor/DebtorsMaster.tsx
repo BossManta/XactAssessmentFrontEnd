@@ -44,7 +44,7 @@ const DebtorsMaster: FunctionComponent<DebtorsMasterProps> = () => {
                         customRowElementBuilder={[
                             (row) => <button className="defaultButtonStyle" title="Edit"  onClick={()=>handleEditClick(row as DebtorInfo)}>Edit</button>,
                             (row) => <Link to={`/debtorsdetails/${(row as DebtorInfo).accountCode}`} className="defaultButtonStyle" title="View Details" onClick={()=>handleEditClick(row as DebtorInfo)}>Details</Link>,
-                            (row) => <button className="defaultButtonStyle" title="Add Funds"  onClick={()=>handleAddFundsClick(row as DebtorInfo)}>Add Funds</button>,
+                            // (row) => <button className="defaultButtonStyle" title="Add Funds"  onClick={()=>handleAddFundsClick(row as DebtorInfo)}>Add Funds</button>,
                         ]}
             />
 

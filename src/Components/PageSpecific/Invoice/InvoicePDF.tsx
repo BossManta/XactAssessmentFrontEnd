@@ -19,8 +19,8 @@ const InvoicePDF: FunctionComponent<InvoicePDFProps> = ({invoiceInfo}) => {
         {headerName:"Qty",                  jsonName:"qtySold"},
         {headerName:"Stock Code",           jsonName:"stockCode"},
         {headerName:"Stock Description",    jsonName:"disc"},
-        {headerName:"Unit Price",           jsonName:"unitCost", customFunction:formatMoney},
-        {headerName:"Combined Price",       jsonName:"combinedCost", customFunction:formatMoney},
+        {headerName:"Unit Price",           jsonName:"unitSell", customFunction:formatMoney},
+        {headerName:"Combined Price",       jsonName:"combinedSell", customFunction:formatMoney},
     ]
 
 
@@ -70,7 +70,7 @@ const InvoicePDF: FunctionComponent<InvoicePDFProps> = ({invoiceInfo}) => {
 
                                 values={[formatMoney(generalInfo.totalSellAmountExclVat),
                                          formatMoney(generalInfo.vat),
-                                         formatMoney(generalInfo.totalCost)]}
+                                         formatMoney(generalInfo.total)]}
                 />
             </div>
 

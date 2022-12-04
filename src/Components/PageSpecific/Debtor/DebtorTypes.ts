@@ -5,8 +5,8 @@ export type DebtorInfo = {
     address2: string
     address3: string
     balance: number
-    salesYearToDate: string
-    costYearToDate: string
+    salesYearToDate: number
+    costYearToDate: number
 }
 
 export type DebtorInvoice = {

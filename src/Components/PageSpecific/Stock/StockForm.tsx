@@ -44,8 +44,16 @@ const StockForm: FunctionComponent<StockFormProps> = ({formSubmit, presetData}) 
         <form className="flex flex-col m-8" onSubmit={handleSubmit(onSubmit)}>
 
             {formFieldInfo.map(f=> {
-                const defaultValue = presetData?presetData[f.apiName as keyof StockInfo]:"";
-                return <input title={f.placeholder} defaultValue={defaultValue} className={`formInput ${errors[f.apiName] && 'formError'}`} type={f.type} placeholder={f.placeholder} {...register(f.apiName, f.requirements)} />
+                
+                const rawDefaultValue = presetData?presetData[f.apiName as keyof StockInfo]:"";
+                const defaultValue = isNaN(rawDefaultValue as number)?rawDefaultValue:Math.round(rawDefaultValue as number*100)/100;
+
+                return <input   className={`formInput ${errors[f.apiName] && 'formError'}`}
+                                title={f.placeholder}
+                                defaultValue={defaultValue}
+                                type={f.type}
+                                placeholder={f.placeholder}
+                                {...register(f.apiName, f.requirements)} />
             })}
 
             <input className="bg-green-500 p-2 mt-6 rounded-md text-white" type="submit" value="Submit"/>

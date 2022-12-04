@@ -26,8 +26,8 @@ const DebtorInvoiceItemTable: FunctionComponent<DebtorInvoiceItemTableProps> = (
         {headerName:"Stock Code",           jsonName:"stockCode"},
         {headerName:"Disc",                 jsonName:"disc"},
         {headerName:"Qty Sold",             jsonName:"qtySold"},
-        {headerName:"Item Cost",            jsonName:"unitCost", customFunction:formatMoney},
-        {headerName:"Combined Cost",        jsonName:"combinedCost", customFunction:formatMoney},
+        {headerName:"Item Price",            jsonName:"unitSell", customFunction:formatMoney},
+        {headerName:"Combined Price",        jsonName:"combinedSell", customFunction:formatMoney},
     ]
 
     return ( 

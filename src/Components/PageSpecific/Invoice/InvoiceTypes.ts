@@ -13,7 +13,7 @@ export type InvoiceGeneralInfo = {
     date: string
     totalSellAmountExclVat: number
     vat: number
-    totalCost: number
+    total: number
 }
 
 export type InvoiceItemInfo = {
@@ -22,7 +22,8 @@ export type InvoiceItemInfo = {
     stockCode: number
     qtySold: number
     unitCost: number
-    combinedCost: number
+    unitSell: number
+    combinedSell: number
     disc: string
     total: number
 }
