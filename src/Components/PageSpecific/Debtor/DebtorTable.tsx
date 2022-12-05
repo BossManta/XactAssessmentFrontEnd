@@ -1,18 +1,19 @@
 import { FormEvent, FunctionComponent, useEffect, useState } from "react";
 import formatMoney from "../../Shared/MoneyFormatter";
 import { CustomRowElementBuilder } from "../../Shared/TableDisplayerTypes";
-import TableDisplayer, { ColumnInfo } from "../../TableDisplayer";
+import TableDisplayer, { ColumnInfo } from "../../Shared/TableDisplayer";
 import { fetchDebtors } from "./DebtorAPIRequester";
-import { DebtorInfo } from "./DebtorTypes";
+import { DebtorModel } from "./DebtorTypes";
 
 interface DebtorTableProps {
     refreshTrigger: boolean
     customRowElementBuilder?: CustomRowElementBuilder[]
 }
- 
+
+//A table that lists debtor information.
 const DebtorTable: FunctionComponent<DebtorTableProps> = ({refreshTrigger, customRowElementBuilder=[]}) => {
     
-    const [debtorsList, setDebtorsList] = useState<DebtorInfo[]>([]);
+    const [debtorsList, setDebtorsList] = useState<DebtorModel[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [search, setSearch] = useState<string>("");
 
@@ -37,8 +38,8 @@ const DebtorTable: FunctionComponent<DebtorTableProps> = ({refreshTrigger, custo
         {headerName:"Address2",     jsonName:"address2"},
         {headerName:"Address3",     jsonName:"address3"},
         {headerName:"Balance",      jsonName:"balance", customFunction:formatMoney},
-        {headerName:"Cost YTD",     jsonName:"costYearToDate"},
-        {headerName:"Sales YTD",     jsonName:"salesYearToDate"},
+        {headerName:"Cost YTD",     jsonName:"costYearToDate", customFunction:formatMoney},
+        {headerName:"Sales YTD",     jsonName:"salesYearToDate", customFunction:formatMoney},
     ]
 
 

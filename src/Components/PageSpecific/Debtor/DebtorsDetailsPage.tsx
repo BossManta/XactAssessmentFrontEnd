@@ -3,18 +3,19 @@ import { useParams } from "react-router-dom";
 import PageContentContainer from "../../Shared/PageContentContainer";
 import DebtorInvoiceItemTable from "./DebtorInvoiceItemTable";
 import DebtorInvoiceTable from "./DebtorInvoiceTable";
-import { DebtorInvoice } from "./DebtorTypes";
+import { DebtorInvoiceModel } from "./DebtorTypes";
 
 interface DebtorsDetailsPageProps {
     
 }
- 
+
+//A page to view debtor transaction details.
 const DebtorsDetailsPage: FunctionComponent<DebtorsDetailsPageProps> = () => {
 
     const [selectedInvoiceNumber, setSelectedInvoiceNumber] = useState<number|null>(null);
     const {id} = useParams();
 
-    const handleInvoiceClick = (row: DebtorInvoice) => {
+    const handleInvoiceClick = (row: DebtorInvoiceModel) => {
         setSelectedInvoiceNumber(old=>{
             return old===row.invoiceNo?null:row.invoiceNo;
         });
@@ -25,10 +26,10 @@ const DebtorsDetailsPage: FunctionComponent<DebtorsDetailsPageProps> = () => {
             <h1 className="text-2xl font-bold mb-10">Invoice History</h1>
             <DebtorInvoiceTable stockCode={id as unknown as number} refreshTrigger={true} customRowElementBuilder={[
                 (row)=> {
-                        const isSelected = (row as DebtorInvoice).invoiceNo===selectedInvoiceNumber;
+                        const isSelected = (row as DebtorInvoiceModel).invoiceNo===selectedInvoiceNumber;
                         
                         return <button  className={`${isSelected?"bg-emerald-400 hover:bg-emerald-500":""} defaultButtonStyle w-32`}
-                                onClick={()=>handleInvoiceClick(row as DebtorInvoice)}>
+                                onClick={()=>handleInvoiceClick(row as DebtorInvoiceModel)}>
                                     {isSelected?"Selected":"Select"}
                         </button>}
             ]}/>

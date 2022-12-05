@@ -1,9 +1,9 @@
-import { InvoiceDisplay, InvoiceMinimal } from "./InvoiceTypes";
+import { InvoiceDisplayModel, InvoiceMinimalModel } from "./InvoiceTypes";
 
 var endpoint = process.env.REACT_APP_BACKEND_API_URL+"/invoice";
 
-
-export const fetchPreview = async (invoiceMinimal: InvoiceMinimal, setLoading: (b: boolean)=>void, setInvoicePreview: (d: InvoiceDisplay)=>void) => {
+//Fetch a preview of an invoice. Does not effect database.
+export const fetchPreview = async (invoiceMinimal: InvoiceMinimalModel, setLoading: (b: boolean)=>void, setInvoicePreview: (d: InvoiceDisplayModel)=>void) => {
     
     await fetch(endpoint+"/preview", {
         method: 'PUT',
@@ -20,14 +20,15 @@ export const fetchPreview = async (invoiceMinimal: InvoiceMinimal, setLoading: (
         }
     })
     .then(data => {
-        setInvoicePreview(data as InvoiceDisplay);
+        setInvoicePreview(data as InvoiceDisplayModel);
         
     }).finally(() => {
         setLoading(false);
     });
 }
 
-export const fetchSubmit = async (invoiceMinimal: InvoiceMinimal, setLoading: (b: boolean)=>void, setInvoicePreview: (d: InvoiceDisplay)=>void) => {
+//Generate invoice. Returns invoice information.
+export const fetchSubmit = async (invoiceMinimal: InvoiceMinimalModel, setLoading: (b: boolean)=>void, setInvoicePreview: (d: InvoiceDisplayModel)=>void) => {
     
     await fetch(endpoint+"/submit", {
         method: 'PUT',
@@ -44,7 +45,7 @@ export const fetchSubmit = async (invoiceMinimal: InvoiceMinimal, setLoading: (b
         }
     })
     .then(data => {
-        setInvoicePreview(data as InvoiceDisplay);
+        setInvoicePreview(data as InvoiceDisplayModel);
         
     }).finally(() => {
         setLoading(false);

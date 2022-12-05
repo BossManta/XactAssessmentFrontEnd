@@ -1,13 +1,13 @@
 import { FunctionComponent, useState } from "react";
-import Modal from "../../Modal";
+import Modal from "../../Shared/Modal";
 import PageContentContainer from "../../Shared/PageContentContainer";
 import DebtorTable from "../Debtor/DebtorTable";
-import { DebtorInfo } from "../Debtor/DebtorTypes";
+import { DebtorModel } from "../Debtor/DebtorTypes";
 import StockTable from "../Stock/StockTable";
-import { StockInfo } from "../Stock/StockTypes";
-import InvoicePDF from "./InvoicePDF";
+import { StockModel } from "../Stock/StockTypes";
+import InvoiceDocument from "./InvoiceDocument";
 import StockCountForm from "./StockCountForm";
-import {InvoiceDisplay, InvoiceMinimal, StockCount} from "./InvoiceTypes";
+import {InvoiceDisplayModel, InvoiceMinimalModel, StockCountModel} from "./InvoiceTypes";
 import { fetchPreview, fetchSubmit } from "./InvoiceAPIRequester";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -16,30 +16,31 @@ type SelectionScreen = "Debtor" | "Stock" | "Invoice";
 interface InvoiceProps {
     
 }
- 
+
+//A page for generating an invoice. Allows for debtor and stock selecting.
 const Invoice: FunctionComponent<InvoiceProps> = () => {
 
-    const [selectedDebtor, setSelectedDebtor] = useState<DebtorInfo>();
+    const [selectedDebtor, setSelectedDebtor] = useState<DebtorModel>();
     const [currentSelectionScreen, setCurrentSelectionScreen] = useState<SelectionScreen>("Debtor");
     const [stockModalOpen, setStockModalOpen] = useState<boolean>(false);
-    const [currentStockInfo, setCurrentStockInfo] = useState<StockInfo>();
-    const [stockInfoMap, setStockInfoMap] = useState(new Map<number, StockCount>())
-    const [invoicePreview, setInvoicePreview] = useState<InvoiceDisplay>();
+    const [currentStockInfo, setCurrentStockInfo] = useState<StockModel>();
+    const [stockInfoMap, setStockInfoMap] = useState(new Map<number, StockCountModel>())
+    const [invoicePreview, setInvoicePreview] = useState<InvoiceDisplayModel>();
     const [isLoading, setIsLoading] = useState(true);
 
-    const handleStockClick = (row: StockInfo) => {
+    const handleStockClick = (row: StockModel) => {
         setCurrentStockInfo(row);
         setStockModalOpen(true)
     }
 
-    const handleDebtorClick = (row: DebtorInfo) => {
+    const handleDebtorClick = (row: DebtorModel) => {
         setSelectedDebtor(row);
         setCurrentSelectionScreen("Stock");
     }
 
     const handlePreviewClick = () => {
         const s = Array.from(stockInfoMap.values());
-        const minInvoice: InvoiceMinimal = {accountCode: (selectedDebtor as DebtorInfo).accountCode,
+        const minInvoice: InvoiceMinimalModel = {accountCode: (selectedDebtor as DebtorModel).accountCode,
                                             stockCountArray: s}
         fetchPreview(minInvoice, setIsLoading, setInvoicePreview);
         setCurrentSelectionScreen("Invoice");
@@ -47,14 +48,14 @@ const Invoice: FunctionComponent<InvoiceProps> = () => {
 
     const handleSubmitClick = () => {
         const s = Array.from(stockInfoMap.values());
-        const minInvoice: InvoiceMinimal = {accountCode: (selectedDebtor as DebtorInfo).accountCode,
+        const minInvoice: InvoiceMinimalModel = {accountCode: (selectedDebtor as DebtorModel).accountCode,
                                             stockCountArray: s}
         fetchSubmit(minInvoice, setIsLoading, setInvoicePreview);
         toast.success("Successfully created invoice");
     }
 
     const addToListOfStocks = (count: number) => {
-        const curStockInfo = currentStockInfo as StockInfo;
+        const curStockInfo = currentStockInfo as StockModel;
 
         //Removes if set item qty to 0
         if (count === 0) {
@@ -66,14 +67,14 @@ const Invoice: FunctionComponent<InvoiceProps> = () => {
 
         //Add item and set qty
         else {
-            const toAdd: StockCount = {stockCode: curStockInfo.stockCode, count: count}
+            const toAdd: StockCountModel = {stockCode: curStockInfo.stockCode, count: count}
             setStockInfoMap(old=>old.set(curStockInfo.stockCode, toAdd))
         }
 
         setStockModalOpen(false);
     }
 
-    const generateStockButtonContent = (row: StockInfo) => {
+    const generateStockButtonContent = (row: StockModel) => {
         if (stockInfoMap.has(row.stockCode)  && stockInfoMap.get(row.stockCode)?.count!==0) {
             return stockInfoMap.get(row.stockCode)?.count??"+"
         }
@@ -90,7 +91,7 @@ const Invoice: FunctionComponent<InvoiceProps> = () => {
                         <div className="overflow">                
                             <DebtorTable refreshTrigger={true} 
                                 customRowElementBuilder={[
-                                    (row) => <button className="defaultButtonStyle" onClick={()=>handleDebtorClick(row as DebtorInfo)}>Set Debtor</button>
+                                    (row) => <button className="defaultButtonStyle" onClick={()=>handleDebtorClick(row as DebtorModel)}>Set Debtor</button>
                                 ]}
                             />
                         </div>
@@ -117,8 +118,8 @@ const Invoice: FunctionComponent<InvoiceProps> = () => {
                             <StockTable refreshTrigger={true} 
                                 customRowElementBuilder = {[
                                     (row) => <button className="defaultButtonStyle w-16"
-                                         onClick={()=>handleStockClick(row as StockInfo)}>
-                                        {generateStockButtonContent(row as StockInfo)}
+                                         onClick={()=>handleStockClick(row as StockModel)}>
+                                        {generateStockButtonContent(row as StockModel)}
                                     </button>
                                 ]}
                             />
@@ -141,7 +142,7 @@ const Invoice: FunctionComponent<InvoiceProps> = () => {
 
                         {isLoading?"Loading...":
                             <div className="mb-16 p-6 w-full">
-                                <InvoicePDF invoiceInfo={invoicePreview as InvoiceDisplay}/>
+                                <InvoiceDocument invoiceInfo={invoicePreview as InvoiceDisplayModel}/>
                             </div>
                         }
                     </>

@@ -5,7 +5,8 @@ interface SpacedListProps {
     values: any[]
     className?: string
 }
- 
+
+//A component that allows for a neatly spaced (Label: Value) list.
 const SpacedList: FunctionComponent<SpacedListProps> = ({labels, values, className}) => {
     return ( 
         <div className={`${className} flex justify-between`}>

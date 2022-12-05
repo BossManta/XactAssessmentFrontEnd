@@ -1,23 +1,24 @@
 import { FunctionComponent, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import Modal from "../../Modal";
+import Modal from "../../Shared/Modal";
 import PageContentContainer from "../../Shared/PageContentContainer";
-import { StockCount } from "../Invoice/InvoiceTypes";
+import { StockCountModel } from "../Invoice/InvoiceTypes";
 import StockCountForm from "../Invoice/StockCountForm";
 import { addStock, createStock, editStock } from "./StockAPIRequester";
 import StockForm from "./StockForm";
 import StockTable from "./StockTable";
-import { StockInfo } from "./StockTypes";
+import { StockModel } from "./StockTypes";
 
 interface StockMasterProps {
     
 }
- 
+
+//A page to list and manage stock items.
 const StockMaster: FunctionComponent<StockMasterProps> = () => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
-    const [selectedRow, setSelectedRow] = useState<StockInfo>();
+    const [selectedRow, setSelectedRow] = useState<StockModel>();
     const [stockTableRefreshTrigger, setStockTableRefreshTrigger] = useState<boolean>(false);
     const [addStockModalOpen, setAddStockModalOpen] = useState<boolean>(false);
     
@@ -34,19 +35,19 @@ const StockMaster: FunctionComponent<StockMasterProps> = () => {
         toast.error(resp);
     }
     
-    const handleEditClick = (row: StockInfo) => {
+    const handleEditClick = (row: StockModel) => {
         setModalOpen(true);
         setIsEditMode(true);
         setSelectedRow(row);
     }
     
-    const handleAddStockClick = (row: StockInfo) => {
+    const handleAddStockClick = (row: StockModel) => {
         setAddStockModalOpen(true);
         setSelectedRow(row);
     }
 
     const handleAddStock = (count: number) => {
-        const stockCount: StockCount = {stockCode:(selectedRow as StockInfo).stockCode, count:count}
+        const stockCount: StockCountModel = {stockCode:(selectedRow as StockModel).stockCode, count:count}
         addStock(stockCount, onSuccess, onFail);
         setStockTableRefreshTrigger(old=>!old);
     }
@@ -56,9 +57,9 @@ const StockMaster: FunctionComponent<StockMasterProps> = () => {
         
             <StockTable refreshTrigger={stockTableRefreshTrigger} 
                         customRowElementBuilder = {[
-                            (row) => <button className="defaultButtonStyle" onClick={()=>handleEditClick(row as StockInfo)}>Edit</button>,
-                            (row) => <Link to={`/stockdetails/${(row as StockInfo).stockCode}`} className="defaultButtonStyle" onClick={()=>handleEditClick(row as StockInfo)}>Details</Link>,
-                            (row) => <button className="defaultButtonStyle" onClick={()=>handleAddStockClick(row as StockInfo)}>Add Stock</button>,
+                            (row) => <button className="defaultButtonStyle" onClick={()=>handleEditClick(row as StockModel)}>Edit</button>,
+                            (row) => <Link to={`/stockdetails/${(row as StockModel).stockCode}`} className="defaultButtonStyle" onClick={()=>handleEditClick(row as StockModel)}>Details</Link>,
+                            (row) => <button className="defaultButtonStyle" onClick={()=>handleAddStockClick(row as StockModel)}>Add Stock</button>,
                         ]}  
                                 
                                 />
@@ -68,7 +69,7 @@ const StockMaster: FunctionComponent<StockMasterProps> = () => {
             {/* Modal to add or edit record to table */}
             {modalOpen && 
                 <Modal openSetter={setModalOpen}>
-                    <StockForm presetData={(selectedRow as StockInfo)} formSubmit={(data) => {
+                    <StockForm presetData={(selectedRow as StockModel)} formSubmit={(data) => {
 
                         if (isEditMode) {
                             editStock(data, onSuccess, onFail);

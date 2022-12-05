@@ -1,4 +1,5 @@
-export type DebtorInfo = {
+//A model to represent a debtor.
+export type DebtorModel = {
     accountCode: number
     name: string
     address1: string
@@ -9,7 +10,8 @@ export type DebtorInfo = {
     costYearToDate: number
 }
 
-export type DebtorInvoice = {
+//A model to represent invoice data from debtor.
+export type DebtorInvoiceModel = {
     invoiceNo: number
     date: string
     itemCount: number

@@ -4,8 +4,8 @@ import { createDebtor, editDebtor } from "./DebtorAPIRequester";
 import DebtorForm from "./DebtorForm";
 
 import 'react-toastify/dist/ReactToastify.css';
-import { DebtorInfo } from "./DebtorTypes";
-import Modal from "../../Modal";
+import { DebtorModel } from "./DebtorTypes";
+import Modal from "../../Shared/Modal";
 import DebtorTable from "./DebtorTable";
 import PageContentContainer from "../../Shared/PageContentContainer";
 import { Link } from "react-router-dom";
@@ -13,11 +13,12 @@ import { Link } from "react-router-dom";
 interface DebtorsMasterProps {
     
 }
- 
+
+//A page that lists all debtors. Allows for management of debtors.
 const DebtorsMaster: FunctionComponent<DebtorsMasterProps> = () => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
-    const [editPreset, setEditPreset] = useState<DebtorInfo>();
+    const [editPreset, setEditPreset] = useState<DebtorModel>();
     const [debtorsTableRefreshTrigger, setDebtorsTableRefreshTrigger] = useState<boolean>(false);
 
 
@@ -27,14 +28,10 @@ const DebtorsMaster: FunctionComponent<DebtorsMasterProps> = () => {
         setDebtorsTableRefreshTrigger(old=>!old);
     }
     
-    const handleEditClick = (row: DebtorInfo) => {
+    const handleEditClick = (row: DebtorModel) => {
         setModalOpen(true);
         setIsEditMode(true);
         setEditPreset(row);
-    }
-
-    const handleAddFundsClick = (row: DebtorInfo) => {
-
     }
 
     return ( 
@@ -42,8 +39,8 @@ const DebtorsMaster: FunctionComponent<DebtorsMasterProps> = () => {
 
             <DebtorTable refreshTrigger={debtorsTableRefreshTrigger} 
                         customRowElementBuilder={[
-                            (row) => <button className="defaultButtonStyle" title="Edit"  onClick={()=>handleEditClick(row as DebtorInfo)}>Edit</button>,
-                            (row) => <Link to={`/debtorsdetails/${(row as DebtorInfo).accountCode}`} className="defaultButtonStyle" title="View Details" onClick={()=>handleEditClick(row as DebtorInfo)}>Details</Link>,
+                            (row) => <button className="defaultButtonStyle" title="Edit"  onClick={()=>handleEditClick(row as DebtorModel)}>Edit</button>,
+                            (row) => <Link to={`/debtorsdetails/${(row as DebtorModel).accountCode}`} className="defaultButtonStyle" title="View Details" onClick={()=>handleEditClick(row as DebtorModel)}>Details</Link>,
                             // (row) => <button className="defaultButtonStyle" title="Add Funds"  onClick={()=>handleAddFundsClick(row as DebtorInfo)}>Add Funds</button>,
                         ]}
             />
@@ -53,7 +50,7 @@ const DebtorsMaster: FunctionComponent<DebtorsMasterProps> = () => {
             {/* Modal to add or edit record to table */}
             {modalOpen && 
                 <Modal openSetter={setModalOpen}>            
-                    <DebtorForm presetData={editPreset?(editPreset as DebtorInfo):undefined} formSubmit={(data) => {
+                    <DebtorForm presetData={editPreset?(editPreset as DebtorModel):undefined} formSubmit={(data) => {
 
                         if (isEditMode) {
                             editDebtor(data, onSuccess, (resp: any)=>toast.error(resp));

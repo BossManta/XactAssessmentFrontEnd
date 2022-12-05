@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 interface NavbarProps {
     
 }
- 
+
+//Navbar for navigating between pages.
 const Navbar: React.FunctionComponent<NavbarProps> = () => {
 
     const links = [

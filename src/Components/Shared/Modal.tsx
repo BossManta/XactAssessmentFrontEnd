@@ -4,7 +4,9 @@ interface ModalProps {
     children: ReactNode
     openSetter: (isOpen: boolean) => void
 }
- 
+
+//A general modal component.
+//Allows for pop up UI.
 const Modal: FunctionComponent<ModalProps> = ({children, openSetter}) => {
     return ( 
         <div onClick={()=>openSetter(false)}

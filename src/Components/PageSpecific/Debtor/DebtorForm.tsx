@@ -1,20 +1,22 @@
 import { FunctionComponent } from "react";
 import { useForm } from "react-hook-form";
-import { DebtorInfo } from "./DebtorTypes";
+import { DebtorModel } from "./DebtorTypes";
 
 interface DebtorFormProps {
-    formSubmit: (debtorJson: DebtorInfo) => void;
-    presetData?: DebtorInfo
+    formSubmit: (debtorJson: DebtorModel) => void;
+    presetData?: DebtorModel
 }
 
 type FormFieldInfo = {
     type: string
     placeholder: string
-    apiName: keyof DebtorInfo
+    apiName: keyof DebtorModel
     requirements: {}
 
 }
- 
+
+
+//A form to create or edit debtors. Has field validation.
 const DebtorForm: FunctionComponent<DebtorFormProps> = ({formSubmit, presetData}) => {
     
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -43,8 +45,8 @@ const DebtorForm: FunctionComponent<DebtorFormProps> = ({formSubmit, presetData}
 
             {formFieldInfo.map(f=> {
 
-                const rawDefaultValue = presetData?presetData[f.apiName as keyof DebtorInfo]:"";
-                const defaultValue = isNaN(rawDefaultValue as number)?rawDefaultValue:Math.round(rawDefaultValue as number*100)/100
+                const rawDefaultValue = presetData?presetData[f.apiName as keyof DebtorModel]:"";
+                const defaultValue = (isNaN(rawDefaultValue as number)||rawDefaultValue==="")?rawDefaultValue:Math.round(rawDefaultValue as number*100)/100
 
                 return <input   className={`formInput ${errors[f.apiName] && 'formError'}`}
                                 title={f.placeholder} 

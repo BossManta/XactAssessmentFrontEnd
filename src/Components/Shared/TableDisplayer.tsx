@@ -1,5 +1,5 @@
 import {FunctionComponent, useState} from 'react';
-import { CustomRowElementBuilder } from './Shared/TableDisplayerTypes';
+import { CustomRowElementBuilder } from './TableDisplayerTypes';
 
 export type ColumnInfo = {headerName:string, jsonName: string, customFunction?: (input: any)=>any}[]
 
@@ -11,6 +11,7 @@ interface TableDisplayerProps {
     disableSort?: boolean
 }
  
+//A general table component. Allows for listing and sorting of information.
 const TableDisplayer: FunctionComponent<TableDisplayerProps> = ({columnInfo, jsonData, customRowElementBuilder=[], disableSort=false}) => {
     
     const [sortingHeader, setSortingHeader] = useState<string>(columnInfo[0].headerName);

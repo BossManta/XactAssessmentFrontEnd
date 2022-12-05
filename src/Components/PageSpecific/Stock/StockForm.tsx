@@ -1,21 +1,21 @@
 import { FunctionComponent } from "react";
 import { useForm } from "react-hook-form";
-import { StockInfo } from "./StockTypes";
+import { StockModel } from "./StockTypes";
 
 interface StockFormProps {
-    formSubmit: (stockJson: StockInfo) => void;
-    presetData?: StockInfo
+    formSubmit: (stockJson: StockModel) => void;
+    presetData?: StockModel
 }
 
 type FormFieldInfo = {
     type: string
     placeholder: string
-    apiName: keyof StockInfo
+    apiName: keyof StockModel
     requirements: {}
 
 }
 
-
+//A form to create and edit stock items.
 const StockForm: FunctionComponent<StockFormProps> = ({formSubmit, presetData}) => {
     
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -45,8 +45,8 @@ const StockForm: FunctionComponent<StockFormProps> = ({formSubmit, presetData}) 
 
             {formFieldInfo.map(f=> {
                 
-                const rawDefaultValue = presetData?presetData[f.apiName as keyof StockInfo]:"";
-                const defaultValue = isNaN(rawDefaultValue as number)?rawDefaultValue:Math.round(rawDefaultValue as number*100)/100;
+                const rawDefaultValue = presetData?presetData[f.apiName as keyof StockModel]:"";
+                const defaultValue = (isNaN(rawDefaultValue as number)||rawDefaultValue==="")?rawDefaultValue:Math.round(rawDefaultValue as number*100)/100;
 
                 return <input   className={`formInput ${errors[f.apiName] && 'formError'}`}
                                 title={f.placeholder}

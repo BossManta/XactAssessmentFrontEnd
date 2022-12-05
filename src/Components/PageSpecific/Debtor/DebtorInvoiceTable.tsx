@@ -1,19 +1,21 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import formatMoney from "../../Shared/MoneyFormatter";
 import { CustomRowElementBuilder } from "../../Shared/TableDisplayerTypes";
-import TableDisplayer, { ColumnInfo } from "../../TableDisplayer";
+import TableDisplayer, { ColumnInfo } from "../../Shared/TableDisplayer";
 import { fetchInvoices } from "./DebtorAPIRequester";
-import { DebtorInvoice } from "./DebtorTypes";
+import { DebtorInvoiceModel } from "./DebtorTypes";
 
 interface DebtorInvoiceTableProps {
     stockCode: number
     refreshTrigger: boolean
     customRowElementBuilder?: CustomRowElementBuilder[]
 }
- 
+
+
+//A table containing a list of invoices with a debtor.
 const DebtorInvoiceTable: FunctionComponent<DebtorInvoiceTableProps> = ({stockCode, refreshTrigger, customRowElementBuilder=[]}) => {
 
-    const [invoiceList, setInvoiceList] = useState<DebtorInvoice[]>([]);
+    const [invoiceList, setInvoiceList] = useState<DebtorInvoiceModel[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {

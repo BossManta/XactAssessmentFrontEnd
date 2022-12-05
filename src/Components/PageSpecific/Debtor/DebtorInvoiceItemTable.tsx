@@ -1,8 +1,8 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import formatMoney from "../../Shared/MoneyFormatter";
 import { CustomRowElementBuilder } from "../../Shared/TableDisplayerTypes";
-import TableDisplayer, { ColumnInfo } from "../../TableDisplayer";
-import { InvoiceItemInfo } from "../Invoice/InvoiceTypes";
+import TableDisplayer, { ColumnInfo } from "../../Shared/TableDisplayer";
+import { InvoiceItemModel } from "../Invoice/InvoiceTypes";
 import { fetchInvoiceItems } from "./DebtorAPIRequester";
 
 interface DebtorInvoiceItemTableProps {
@@ -10,10 +10,11 @@ interface DebtorInvoiceItemTableProps {
     refreshTrigger: boolean
     customRowElementBuilder?: CustomRowElementBuilder[]
 }
- 
+
+//A table containing invoice item information for debtor. Used in debtor details page.
 const DebtorInvoiceItemTable: FunctionComponent<DebtorInvoiceItemTableProps> = ({invoiceNo, refreshTrigger, customRowElementBuilder=[]}) => {
 
-    const [invoiceItemList, setInvoiceItemList] = useState<InvoiceItemInfo[]>([]);
+    const [invoiceItemList, setInvoiceItemList] = useState<InvoiceItemModel[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -21,7 +22,6 @@ const DebtorInvoiceItemTable: FunctionComponent<DebtorInvoiceItemTableProps> = (
     }, [refreshTrigger, invoiceNo])
 
     const tableColumnInfo: ColumnInfo = [
-        // {headerName:"Invoice Number",       jsonName:"invoiceNo"},
         {headerName:"Item No",              jsonName:"itemNo"},
         {headerName:"Stock Code",           jsonName:"stockCode"},
         {headerName:"Disc",                 jsonName:"disc"},

@@ -1,9 +1,9 @@
-import { StockCount } from "../Invoice/InvoiceTypes";
-import { StockInfo } from "./StockTypes";
+import { StockCountModel } from "../Invoice/InvoiceTypes";
+import { StockModel } from "./StockTypes";
 
 var endpoint = process.env.REACT_APP_BACKEND_API_URL+"/stockmaster";
 
-
+//Fetch list of stock items from the backend
 export const fetchStock = async (searchString: string, setLoading: (b: boolean)=>void, setStockList: (d: [])=>void) => {
     
     let ep = endpoint;
@@ -27,8 +27,8 @@ export const fetchStock = async (searchString: string, setLoading: (b: boolean)=
     });
 }
 
-
-export const createStock = async (stockInfo: StockInfo, onSuccess: ()=>void, onFail: (jsonData:string)=>void) => {
+//Create a new stock item and add it to the database
+export const createStock = async (stockInfo: StockModel, onSuccess: ()=>void, onFail: (jsonData:string)=>void) => {
     fetch(endpoint+"/insert", {
         method: 'POST',
         headers: {
@@ -48,8 +48,8 @@ export const createStock = async (stockInfo: StockInfo, onSuccess: ()=>void, onF
 }
 
 
-
-export const editStock = async (stockInfo: StockInfo, onSuccess: ()=>void, onFail: (jsonData:string)=>void) => {
+//Replace an existing stock item with a new provided one
+export const editStock = async (stockInfo: StockModel, onSuccess: ()=>void, onFail: (jsonData:string)=>void) => {
     fetch(endpoint+"/edit", {
         method: 'PUT',
         headers: {
@@ -68,8 +68,8 @@ export const editStock = async (stockInfo: StockInfo, onSuccess: ()=>void, onFai
     })
 }
 
-
-export const addStock = async (stockCount: StockCount, onSuccess: ()=>void, onFail: (jsonData:string)=>void) => {
+//Add stock to given debtor.
+export const addStock = async (stockCount: StockCountModel, onSuccess: ()=>void, onFail: (jsonData:string)=>void) => {
     fetch(endpoint+"/addstock", {
         method: 'PATCH',
         headers: {
@@ -88,6 +88,7 @@ export const addStock = async (stockCount: StockCount, onSuccess: ()=>void, onFa
     })
 }
 
+//Fetch transaction information for given stock item.
 export const fetchDetails = async (stockCode: number, setLoading: (b: boolean)=>void, setDetailsList: (d: [])=>void) => {
     await fetch(endpoint+`/details/${stockCode}`).then(response => {
         if (response.ok)

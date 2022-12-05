@@ -1,19 +1,20 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import formatMoney from "../../Shared/MoneyFormatter";
 import { CustomRowElementBuilder } from "../../Shared/TableDisplayerTypes";
-import TableDisplayer, { ColumnInfo } from "../../TableDisplayer";
+import TableDisplayer, { ColumnInfo } from "../../Shared/TableDisplayer";
 import { fetchDetails } from "./StockAPIRequester";
-import { StockDetails } from "./StockTypes";
+import { StockDetailsModel } from "./StockTypes";
 
 interface StockTableProps {
     stockCode: number
     refreshTrigger: boolean
     customRowElementBuilder?: CustomRowElementBuilder[]
 }
- 
+
+//A table to show all stock transaction information.
 const StockTable: FunctionComponent<StockTableProps> = ({stockCode, refreshTrigger, customRowElementBuilder=[]}) => {
 
-    const [detailsList, setDetailsList] = useState<StockDetails[]>([]);
+    const [detailsList, setDetailsList] = useState<StockDetailsModel[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {

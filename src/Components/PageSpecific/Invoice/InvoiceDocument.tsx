@@ -1,14 +1,15 @@
 import { FunctionComponent } from "react";
 import formatMoney from "../../Shared/MoneyFormatter";
 import SpacedList from "../../Shared/SpacedList";
-import TableDisplayer, { ColumnInfo } from "../../TableDisplayer";
-import { InvoiceDisplay } from "./InvoiceTypes";
+import TableDisplayer, { ColumnInfo } from "../../Shared/TableDisplayer";
+import { InvoiceDisplayModel } from "./InvoiceTypes";
 
-interface InvoicePDFProps {
-    invoiceInfo: InvoiceDisplay
+interface InvoiceDocumentProps {
+    invoiceInfo: InvoiceDisplayModel
 }
- 
-const InvoicePDF: FunctionComponent<InvoicePDFProps> = ({invoiceInfo}) => {
+
+//Generates a human readable invoice document.
+const InvoiceDocument: FunctionComponent<InvoiceDocumentProps> = ({invoiceInfo}) => {
 
     const generalInfo = invoiceInfo.generalInfo;
     const itemInfo = invoiceInfo.itemInfo;
@@ -78,4 +79,4 @@ const InvoicePDF: FunctionComponent<InvoicePDFProps> = ({invoiceInfo}) => {
     );
 }
  
-export default InvoicePDF;
+export default InvoiceDocument;

@@ -1,4 +1,5 @@
-export type StockInfo = {
+//A model that represents stock information.
+export type StockModel = {
     stockCode: number
     stockDescription: string
     cost: number
@@ -10,7 +11,8 @@ export type StockInfo = {
     stockOnHand: number
 }
 
-export type StockDetails = {
+//A model that represents stock transaction information.
+export type StockDetailsModel = {
     invoiceNo: number
     date: string
     debtorAccountCode: number

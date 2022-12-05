@@ -1,13 +1,16 @@
-import { DebtorInfo } from "../Debtor/DebtorTypes"
-import { StockInfo } from "../Stock/StockTypes"
+import { DebtorModel } from "../Debtor/DebtorTypes"
+import { StockModel } from "../Stock/StockTypes"
 
-export type InvoiceDisplay = {
-    generalInfo: InvoiceGeneralInfo
-    itemInfo: InvoiceItemInfo[]
-    debtorInfo: DebtorInfo
+//Model that represents needed information to create a visual invoice.
+export type InvoiceDisplayModel = {
+    generalInfo: InvoiceGeneralModel
+    itemInfo: InvoiceItemModel[]
+    debtorInfo: DebtorModel
 }
 
-export type InvoiceGeneralInfo = {
+//Model that represents general invoice info.
+//This is everything other than item info.
+export type InvoiceGeneralModel = {
     invoiceNo: number
     accountCode: number
     date: string
@@ -16,7 +19,8 @@ export type InvoiceGeneralInfo = {
     total: number
 }
 
-export type InvoiceItemInfo = {
+//Model that represents invoice item info.
+export type InvoiceItemModel = {
     invoiceNo: number
     itemNo: number
     stockCode: number
@@ -28,12 +32,17 @@ export type InvoiceItemInfo = {
     total: number
 }
 
-export type InvoiceMinimal = {
+//Model that represents stripped down version of invoice.
+//Only contains debtor account code and stock codes and qtys.
+export type InvoiceMinimalModel = {
     accountCode: number
-    stockCountArray: StockCount[]
+    stockCountArray: StockCountModel[]
 }
 
-export type StockCount = {
+//Model that represents stock count info.
+//Contains stock code and count.
+//Used to show qty for a given stock item.
+export type StockCountModel = {
     stockCode: number
     count: number
 }

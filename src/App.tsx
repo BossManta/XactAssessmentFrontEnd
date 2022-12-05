@@ -1,4 +1,4 @@
-import Navbar from './Components/Navbar';
+import Navbar from './Components/PageSpecific/Navbar/Navbar';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import DebtorsMaster from './Components/PageSpecific/Debtor/DebtorsMaster';
 import StockMaster from './Components/PageSpecific/Stock/StockMaster';

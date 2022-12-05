@@ -5,6 +5,8 @@ interface StockCountFormProps {
     updateStockList: (count: number) => void
 }
  
+//A form to allow for stock count selecting.
+//Allows user to select how much stock to add to an invoice.
 const StockCountForm: FunctionComponent<StockCountFormProps> = ({stockLimit, updateStockList}) => {
     
     const [stockCount, setStockCount] = useState<number>();
